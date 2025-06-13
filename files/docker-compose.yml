@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  wordpress:
+    image: wordpress:latest
+    container_name: wordpress
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: {{ pillar.get('wordpress_db_host', 'db') }}
+      WORDPRESS_DB_NAME: {{ pillar.get('wordpress_db_name', 'wordpress') }}
+      WORDPRESS_DB_USER: {{ pillar.get('wordpress_db_user', 'wordpress_user') }}
+      WORDPRESS_DB_PASSWORD: {{ pillar['wordpress_db_password'] }}
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - wordpress_network
+
+  db:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress_user
+      MYSQL_PASSWORD: wordpress_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - wordpress_network
+
+volumes:
+  wordpress_data:
+  mysql_data:
+
+networks:
+  wordpress_network:
+    driver: bridge

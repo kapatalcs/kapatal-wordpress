@@ -1,0 +1,1 @@
+kapatal ALL=(ALL) NOPASSWD: /usr/bin/apt
