@@ -65,7 +65,8 @@ sudo salt "*" state.apply kapatal-wordpress
 ---
 
 ## Notes
-
+- **Usage**
+- You can change the values in the state file such as username (kapatal), user home directory, etc. according to your environment and preferences.
 - **Password Hashing:**
 - You must put a real hash value in the `kapatal_password` variable.
 - You can use the following command to generate the hash:
